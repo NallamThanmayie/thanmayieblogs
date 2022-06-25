@@ -1,0 +1,95 @@
+<%- include('./partials/header.ejs') %> 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">Thanmayie Blogs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+        </li>
+        
+        
+        
+        <% if(!is_authenticated) { %> 
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/register">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/login">Log In</a>
+        </li>
+        <% } %> 
+        <% if(is_authenticated) { %> 
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/blogs">Your Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/compose">Create blog</a>
+          </li>
+          <% } %> 
+        <% if(is_authenticated) { %> 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= username %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+
+          </ul>
+        </li>
+        <% } %> 
+        
+       
+    </div>
+  </div>
+</nav>
+  
+  <div class="container mt-3 mb-5">
+    <% if(!is_authenticated) { %> 
+      <div class="alert alert-warning" role="alert">
+        You need to <a href="/login" class="alert-link">Login</a> or <a href="/register" class="alert-link">Signup</a> in order to access the features
+      </div>
+    <% } %> 
+    <h1 class="text-center text-success font-monospace"><i class="fa-solid fa-brain"></i> Give the writer inside you a push</h1>
+    <h3 class="text-center"><i class="fa-solid fa-cubes-stacked"></i> All Blogs</h3>
+        <% blogs.reverse() %> 
+        <% blogs.forEach(blog => { %> 
+          <a href="/blog/<%= blog._id  %> " style="text-decoration: none; color:black">
+            <div class="card mt-3 ">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fa-brands fa-battle-net"></i> <%= blog.title %> </h5>
+                  <p class="card-text"><i class="fa-solid fa-align-left"></i> <%= blog.content.slice(0,99) %>... <a href="/blog/<%= blog._id  %>">read more</a> </p>
+                  <figure class="text-end mt-3">
+                    <figcaption class="blockquote-footer">
+                      <i class="fa-solid fa-signature"></i>Author: <cite title="Source Title"><%= blog.username || 'Unknown' %> </cite>
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <figcaption class="blockquote-footer">
+                      <i class="fa-solid fa-calendar"></i> Published on: <cite title="Source Title"><%= blog.postedAt %> </cite>
+                    </figcaption>
+                  </figure>
+                  <% /* %>
+                  <a href="/delete/<%= blog._id  %> " class="btn btn-danger">Delete</a>
+                  <a href="/edit/<%= blog._id  %> " class="btn btn-warning">Edit</a>
+                  <% */ %> 
+                  
+                </div>
+              </div>
+            </a>
+        
+        <% }) %> 
+
+      
+  </div>
+  <footer class="bg-dark text-center text-lg-start">
+    <!-- Copyright -->
+    <div class="text-center text-light p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-light" href="/">Nallam Thanmayie</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+<%- include('./partials/footer.ejs') %> 
